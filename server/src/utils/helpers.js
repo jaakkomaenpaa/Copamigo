@@ -2,26 +2,29 @@ const config = require('./config')
 
 // Calculations will be improved to take time into account more
 const countPromilles = (user) => {
-
   const drinksToCount = filterDrinks(user.drinksConsumed)
 
   let alcoholInGrams = 0
-  drinksToCount.forEach(drink => {
+  drinksToCount.forEach((drink) => {
     // (Alc% * Volume(l) * 1000) / 100 * Density of ethanol
-    alcoholInGrams += (drink.alcVol * drink.size * 1000) / 100 * 0.789
+    alcoholInGrams += ((drink.alcVol * drink.size * 1000) / 100) * 0.789
   })
- 
+
   const volumeOfDistribution = getVolumeOfDistribution(user)
   const eliminationRate = user.gender === 'male' ? 0.148 : 0.156
 
-  const earliestDrink = drinksToCount.sort((a, b) => 
-    new Date(a.timestamp) - new Date(b.timestamp)
+  const earliestDrink = drinksToCount.sort(
+    (a, b) => new Date(a.timestamp) - new Date(b.timestamp)
   )[0]
-  const lengthOfDrinking = (new Date() - new Date(earliestDrink.timestamp)) / (1000 * 60 * 60)
 
-  const promilles = alcoholInGrams / volumeOfDistribution - eliminationRate * lengthOfDrinking
+  const lengthOfDrinking = earliestDrink
+    ? (new Date() - new Date(earliestDrink.timestamp)) / (1000 * 60 * 60)
+    : 0
+
+  const promilles =
+    alcoholInGrams / volumeOfDistribution - eliminationRate * lengthOfDrinking
   // Sometimes the formula gives a negative number so we don't want to return that
-  return promilles > 0 ? parseFloat(promilles.toFixed(2)) : 0.00
+  return promilles > 0 ? parseFloat(promilles.toFixed(2)) : 0.0
 }
 
 const filterDrinks = (drinksConsumed) => {
@@ -34,9 +37,8 @@ const filterDrinks = (drinksConsumed) => {
   )
 }
 
- // Uses calculation method 2 (note for self)
+// Uses calculation method 2 (note for self)
 const getVolumeOfDistribution = (user) => {
-
   const coefficient1 = user.gender === 'male' ? 0.6 : 0.5
   const totalBodyWater = user.weight * coefficient1
 
@@ -45,5 +47,5 @@ const getVolumeOfDistribution = (user) => {
 }
 
 module.exports = {
-  countPromilles
+  countPromilles,
 }
