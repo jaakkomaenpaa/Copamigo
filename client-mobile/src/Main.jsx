@@ -7,19 +7,21 @@ import Friends from './pages/Friends'
 import AddDrink from './pages/AddDrink'
 import Login from './pages/Login'
 import Register from './pages/Register'
+import Account from './pages/Account'
 import Home from './pages/Home'
 
 const Main = () => {
   return (
     <SafeAreaView style={styles.container}>
       <Header />
-      <View>
+      <View style={styles.content}>
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/add-drink' element={<AddDrink />} />
           <Route path='/friends' element={<Friends />} />
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
+          <Route path='/account' element={<Account />} />
           <Route path='*' element={<Navigate to='/' />} />
         </Routes>
       </View>
@@ -36,7 +38,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
-    flex: 1
+  },
+  content: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    height: '82%' // For ios, check for android
   }
 })
 

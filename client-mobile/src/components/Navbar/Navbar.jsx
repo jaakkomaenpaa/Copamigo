@@ -1,12 +1,30 @@
 import { View, StyleSheet } from 'react-native'
+import { useEffect, useState } from 'react'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import NavbarTab from './NavbarTab'
 import { tabs } from '../../tabs'
 
 const Navbar = () => {
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  //const [tabsToShow, setTabsToShow] = useState([])
+
+  useEffect(() => {
+    const getLoggedUser = async () => {
+      const loggedUser = await AsyncStorage.getItem('loggedUser')
+      setIsLoggedIn(loggedUser !== null)
+    }
+    getLoggedUser()
+  }, [])
+
+  const tabsToShow = tabs.filter(tab => 
+    isLoggedIn ? tab.showWhenLoggedIn : tab.showWhenLoggedOut
+  )
+
   return (
     <View style={styles.container}>
-      {tabs.map(tab => 
+      {tabsToShow.map(tab => 
         <NavbarTab key={tab.label} label={tab.label} to={tab.to} icon={tab.icon} />  
       )}
     </View>
