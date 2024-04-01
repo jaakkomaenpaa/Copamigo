@@ -9,6 +9,11 @@ const getUser = async userId => {
   return response.data
 }
 
+const getPromilles = async userId => {
+  const response = await axios.get(`${baseUrl}/${userId}/promilles`)
+  return response.data
+}
+
 const create = async userData => {
   const response = await axios.post(baseUrl, userData)
   return response.data
@@ -18,7 +23,6 @@ const addDrink = async drink => {
   const authToken = await AsyncStorage.getItem('authToken')
   const userJSON = await AsyncStorage.getItem('loggedUser')
   const user = JSON.parse(userJSON)
-  console.log(user.id, authToken)
   const auth = {
     headers: { authorization: authToken },
   }
@@ -42,5 +46,5 @@ const remove = async userId => {
   await axios.delete(`${baseUrl}/${userId}`, auth)
 }
 
-const exports = { getUser, create, addDrink, update, remove }
+const exports = { getUser, getPromilles, create, addDrink, update, remove }
 export default exports
