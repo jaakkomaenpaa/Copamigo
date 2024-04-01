@@ -6,7 +6,7 @@ import Navbar from './components/Navbar/Navbar'
 import Friends from './pages/Friends'
 import AddDrink from './pages/AddDrink'
 import Login from './pages/Login'
-import Register from './pages/Register'
+import Register from './pages/Register/Register'
 import Account from './pages/Account'
 import Home from './pages/Home'
 

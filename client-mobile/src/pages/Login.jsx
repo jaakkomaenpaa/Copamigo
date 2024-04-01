@@ -34,14 +34,14 @@ const Login = () => {
         <TextInput
           style={styles.input}
           value={formData.username}
-          onChangeText={(text) => setFormData({ ...formData, username: text })}
-          placeholder='username'
+          onChangeText={text => setFormData({ ...formData, username: text })}
+          placeholder='Username'
         ></TextInput>
         <TextInput
           style={styles.input}
           value={formData.password}
-          onChangeText={(text) => setFormData({ ...formData, password: text })}
-          placeholder='password'
+          onChangeText={text => setFormData({ ...formData, password: text })}
+          placeholder='Password'
           secureTextEntry={true}
         ></TextInput>
       </View>
