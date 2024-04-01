@@ -78,7 +78,11 @@ usersRouter.put('/:id/drinks', async (req, res) => {
     return res.status(401).json({ error: 'Cannot add drinks to other users' })
   }
 
-  const newDrink = { ...req.body, timestamp: new Date().toISOString() }
+  const newDrink = {
+    ...req.body,
+    size: req.body.size / 100, // Convert to litres from cl
+    timestamp: new Date().toISOString(),
+  }
 
   const updatedUser = await User.findByIdAndUpdate(
     req.params.id,

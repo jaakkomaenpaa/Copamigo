@@ -16,7 +16,7 @@ export const tabs = [
       name: 'beer-outline',
     },
     showWhenLoggedIn: true,
-    showWhenLoggedOut: true
+    showWhenLoggedOut: false
   },
   {
     label: 'Friends',
@@ -25,7 +25,7 @@ export const tabs = [
       name: 'happy-outline',
     },
     showWhenLoggedIn: true,
-    showWhenLoggedOut: true
+    showWhenLoggedOut: false
   },
   {
     label: 'Login',
