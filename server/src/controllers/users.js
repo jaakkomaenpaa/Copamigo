@@ -38,6 +38,7 @@ usersRouter.post('/', async (req, res) => {
     const savedUser = await user.save()
     res.status(201).json(savedUser)
   } catch (error) {
+    console.log(error)
     res.status(403).json(error.message)
   }
 })
@@ -115,15 +116,17 @@ usersRouter.put('/:id/friends', async (req, res) => {
   // If friend already has added this user
   if (friendToAdd.friendRequestsSent.some(id => id.toString() === userId)) {
     // Update friend
-    await User.findByIdAndUpdate(friendId, { $push: { friends: userId } })
     await User.findByIdAndUpdate(friendId, {
       $pull: { friendRequestsSent: userId },
     })
+    await User.findByIdAndUpdate(friendId, { $push: { friends: userId } })
     // Update user
-    await User.findByIdAndUpdate(userId, { $push: { friends: friendId } })
+    await User.findByIdAndUpdate(userId, {
+      $pull: { friendRequestsReceived: friendId },
+    })
     const updatedUser = await User.findByIdAndUpdate(
       userId,
-      { $pull: { friendRequestsReceived: friendId } },
+      { $push: { friends: friendId } },
       { new: true }
     )
     return res.json(updatedUser)

@@ -3,6 +3,7 @@ import { View, Text, TextInput, StyleSheet } from 'react-native'
 const Credentials = props => {
   const { formData, setFormData } = props
 
+  // TODO: validate username to be unique in client side as well
   return (
     <View style={styles.container}>
       <Text>Credentials</Text>

@@ -46,15 +46,15 @@ const userSchema = mongoose.Schema({
   // Maybe change these to String username
   friendRequestsSent: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'  
+    ref: 'User'
   }],
   friendRequestsReceived: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'  
+    ref: 'User'
   }],
   friends: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'  
+    ref: 'User'
   }]
 })
 

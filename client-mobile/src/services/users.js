@@ -4,6 +4,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const baseUrl = `${Constants.expoConfig.urls.API_URL}/users`
 
+const getAll = async () => {
+  const response = await axios.get(`${baseUrl}`)
+  return response.data
+}
+
 const getUser = async userId => {
   const response = await axios.get(`${baseUrl}/${userId}`)
   return response.data
@@ -30,6 +35,21 @@ const addDrink = async drink => {
   return response
 }
 
+const addFriend = async friendId => {
+  const authToken = await AsyncStorage.getItem('authToken')
+  const userJSON = await AsyncStorage.getItem('loggedUser')
+  const user = JSON.parse(userJSON)
+  const auth = {
+    headers: { authorization: authToken },
+  }
+  const response = await axios.put(
+    `${baseUrl}/${user.id}/friends`,
+    { friendId },
+    auth
+  )
+  return response
+}
+
 const update = async user => {
   const authToken = await AsyncStorage.getItem('authToken')
   const auth = {
@@ -46,5 +66,14 @@ const remove = async userId => {
   await axios.delete(`${baseUrl}/${userId}`, auth)
 }
 
-const exports = { getUser, getPromilles, create, addDrink, update, remove }
+const exports = {
+  getAll,
+  getUser,
+  getPromilles,
+  create,
+  addFriend,
+  addDrink,
+  update,
+  remove,
+}
 export default exports
