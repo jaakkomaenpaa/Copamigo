@@ -16,6 +16,13 @@ usersRouter.get('/', async (req, res) => {
   res.json(users)
 })
 
+usersRouter.get('/:id/requests', async (req, res) => {
+  const users = await User.findById(req.params.id).populate(
+    'friendRequestsReceived'
+  )
+  res.json(users)
+})
+
 usersRouter.get('/:id/promilles', async (req, res) => {
   const user = await User.findById(req.params.id)
   res.json({
@@ -141,6 +148,36 @@ usersRouter.put('/:id/friends', async (req, res) => {
   const updatedUser = await User.findByIdAndUpdate(
     userId,
     { $push: { friendRequestsSent: friendId } },
+    { new: true }
+  )
+
+  return res.json(updatedUser)
+})
+
+// Decline a friend request
+usersRouter.put('/:id/decline-request', async (req, res) => {
+  const friendId = req.body.friendId
+  const userId = req.params.id
+  const token = req.token
+
+  if (!token) {
+    return res.status(401).json({ error: 'Authorization token missing' })
+  }
+  const decodedToken = jwt.verify(token, config.SECRET)
+  if (!decodedToken.id) {
+    return res.status(401).json({ error: 'Token invalid' })
+  }
+  if (decodedToken.id !== userId) {
+    return res.status(401).json({ error: 'Cannot add friends for other users' })
+  }
+  // Handle declined friend
+  await User.findByIdAndUpdate(friendId, {
+    $pull: { friendRequestsSent: userId },
+  })
+  // Handle user
+  const updatedUser = await User.findByIdAndUpdate(
+    userId,
+    { $pull: { friendRequestsReceived: friendId } },
     { new: true }
   )
 

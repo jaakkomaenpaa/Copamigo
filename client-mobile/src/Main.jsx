@@ -1,9 +1,9 @@
-import { Text, SafeAreaView, StyleSheet, View } from 'react-native'
+import { SafeAreaView, StyleSheet, View } from 'react-native'
 import { Route, Routes, Navigate } from 'react-router-native'
 
 import Header from './components/Header'
 import Navbar from './components/Navbar/Navbar'
-import Friends from './pages/Friends'
+import Friends from './pages/Friends/Friends'
 import AddDrink from './pages/AddDrink'
 import Login from './pages/Login'
 import Register from './pages/Register/Register'
@@ -44,8 +44,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
-    height: '82%' // For ios, check for android
-  }
+    height: '82%', // For ios, check for android
+  },
 })
 
 export default Main

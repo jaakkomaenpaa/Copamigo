@@ -21,6 +21,7 @@ const Login = () => {
     } catch (error) {
       setError(`Error: ${error.response.data.error}`)
       console.log(error)
+      return
     }
     setFormData({ username: '', password: '' })
     navigate('/')
