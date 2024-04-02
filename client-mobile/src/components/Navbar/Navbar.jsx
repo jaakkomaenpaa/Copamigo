@@ -6,9 +6,7 @@ import NavbarTab from './NavbarTab'
 import { tabs } from '../../tabs'
 
 const Navbar = () => {
-
   const [isLoggedIn, setIsLoggedIn] = useState(false)
-  //const [tabsToShow, setTabsToShow] = useState([])
 
   useEffect(() => {
     const getLoggedUser = async () => {
@@ -18,15 +16,20 @@ const Navbar = () => {
     getLoggedUser()
   }, [])
 
-  const tabsToShow = tabs.filter(tab => 
+  const tabsToShow = tabs.filter(tab =>
     isLoggedIn ? tab.showWhenLoggedIn : tab.showWhenLoggedOut
   )
 
   return (
     <View style={styles.container}>
-      {tabsToShow.map(tab => 
-        <NavbarTab key={tab.label} label={tab.label} to={tab.to} icon={tab.icon} />  
-      )}
+      {tabsToShow.map(tab => (
+        <NavbarTab
+          key={tab.label}
+          label={tab.label}
+          to={tab.to}
+          icon={tab.icon}
+        />
+      ))}
     </View>
   )
 }
@@ -39,9 +42,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     left: 0,
-    right: 0
-  }
+    right: 0,
+  },
 })
-
 
 export default Navbar

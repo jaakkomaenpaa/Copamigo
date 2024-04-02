@@ -19,6 +19,11 @@ const getFriendRequests = async userId => {
   return response.data
 }
 
+const getFriendsPromilles = async userId => {
+  const response = await axios.get(`${baseUrl}/${userId}/friends-promilles`)
+  return response.data
+}
+
 const getPromilles = async userId => {
   const response = await axios.get(`${baseUrl}/${userId}/promilles`)
   return response.data
@@ -90,6 +95,7 @@ const exports = {
   getAll,
   getUser,
   getFriendRequests,
+  getFriendsPromilles,
   getPromilles,
   create,
   addFriend,

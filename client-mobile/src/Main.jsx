@@ -8,7 +8,7 @@ import AddDrink from './pages/AddDrink'
 import Login from './pages/Login'
 import Register from './pages/Register/Register'
 import Account from './pages/Account'
-import Home from './pages/Home'
+import Home from './pages/Home/Home'
 
 const Main = () => {
   return (

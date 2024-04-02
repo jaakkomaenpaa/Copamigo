@@ -17,10 +17,20 @@ usersRouter.get('/', async (req, res) => {
 })
 
 usersRouter.get('/:id/requests', async (req, res) => {
-  const users = await User.findById(req.params.id).populate(
+  const user = await User.findById(req.params.id).populate(
     'friendRequestsReceived'
   )
-  res.json(users)
+  res.json(user)
+})
+
+usersRouter.get('/:id/friends-promilles', async (req, res) => {
+  const user = await User.findById(req.params.id).populate('friends')
+  const friends = user.friends.map(friend => ({
+    id: friend._id.toString(),
+    username: friend.username,
+    promilles: countPromilles(friend),
+  }))
+  res.json(friends)
 })
 
 usersRouter.get('/:id/promilles', async (req, res) => {

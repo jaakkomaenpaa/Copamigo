@@ -3,7 +3,7 @@ import { Text, View, StyleSheet } from 'react-native'
 const Header = () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Header</Text>
+      <Text style={styles.text}>Promille counter</Text>
     </View>
   )
 }
